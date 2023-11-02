@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Batformat\EntityAttributes\Models\Attributes\ValueCollections;
+namespace Batformat\EntityAttributes\Models\AttributeValues\ValueCollections;
 
 use Illuminate\Support\Collection;
 
