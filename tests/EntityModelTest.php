@@ -29,9 +29,9 @@ class EntityModelTest extends TestCase
         $entityAttributesValues->add($cityAttributeValueModel);
 
         $entityModel = new EntityModel();
-        $entityModel->setCustomFieldsValues($entityAttributesValues);
+        $entityModel->setAttributesValues($entityAttributesValues);
 
-        $cityAttributeValueModel = $entityModel->getCustomFieldsValues()
+        $cityAttributeValueModel = $entityModel->getAttributesValues()
             ->findByAttributeCode('city');
 
         $this->assertInstanceOf(TextAttributeValuesModel::class, $cityAttributeValueModel);

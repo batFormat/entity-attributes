@@ -10,12 +10,12 @@ class EntityModel
 {
     protected AttributesValuesCollection|null $attributesValues;
 
-    public function getCustomFieldsValues(): ?AttributesValuesCollection
+    public function getAttributesValues(): ?AttributesValuesCollection
     {
         return $this->attributesValues;
     }
 
-    public function setCustomFieldsValues(?AttributesValuesCollection $values): self
+    public function setAttributesValues(?AttributesValuesCollection $values): self
     {
         $this->attributesValues = $values;
 
