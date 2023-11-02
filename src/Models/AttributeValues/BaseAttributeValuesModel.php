@@ -19,9 +19,11 @@ class BaseAttributeValuesModel
         return $this->attributeId;
     }
 
-    public function setAttributeId(?int $attributeId): void
+    public function setAttributeId(?int $attributeId): BaseAttributeValuesModel
     {
         $this->attributeId = $attributeId;
+
+        return $this;
     }
 
     public function getAttributeCode(): ?string
@@ -29,9 +31,11 @@ class BaseAttributeValuesModel
         return $this->attributeCode;
     }
 
-    public function setAttributeCode(?string $attributeCode): void
+    public function setAttributeCode(?string $attributeCode): BaseAttributeValuesModel
     {
         $this->attributeCode = $attributeCode;
+
+        return $this;
     }
 
     public function getValues(): BaseAttributeValueCollection

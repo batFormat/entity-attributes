@@ -8,6 +8,16 @@ class BaseAttributeValueModel
 {
     protected string|int|bool|array|null|object $value;
 
+    public static function fromArray($value): BaseAttributeValueModel
+    {
+        $model = new static();
+
+        $model
+            ->setValue($value['value'] ?? null);
+
+        return $model;
+    }
+
     public function getValue(): object|int|bool|array|string|null
     {
         return $this->value;
