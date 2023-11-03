@@ -4,7 +4,7 @@ namespace Batformat\EntityAttributes\Tests;
 
 use Batformat\EntityAttributes\Models\Attributes\AttributeModel;
 use Batformat\EntityAttributes\Models\Attributes\TextAttributeModel;
-use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class AttributeTest extends TestCase
 {

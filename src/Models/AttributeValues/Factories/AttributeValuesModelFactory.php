@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Batformat\EntityAttributes\Models\AttributeValues\Factories;
 
-use Batformat\EntityAttributes\Exceptions\BadTypeException;
 use Batformat\EntityAttributes\Models\Attributes\AttributeModel;
 use Batformat\EntityAttributes\Models\AttributeValues\BaseAttributeValuesModel;
+use Batformat\EntityAttributes\Models\AttributeValues\SelectAttributeValuesModel;
 use Batformat\EntityAttributes\Models\AttributeValues\TextAttributeValuesModel;
+use Batformat\EntityAttributes\Models\AttributeValues\NumericAttributeValuesModel;
 
 class AttributeValuesModelFactory
 {
@@ -15,7 +16,6 @@ class AttributeValuesModelFactory
      * @param array $attribute
      *
      * @return BaseAttributeValuesModel
-     * @throws BadTypeException
      */
     public static function createModel(array $attribute): BaseAttributeValuesModel
     {
@@ -24,6 +24,12 @@ class AttributeValuesModelFactory
         switch ($attributeType) {
             case AttributeModel::TYPE_TEXT:
                 $model = new TextAttributeValuesModel();
+                break;
+            case AttributeModel::TYPE_NUMERIC:
+                $model = new NumericAttributeValuesModel();
+                break;
+            case AttributeModel::TYPE_SELECT:
+                $model = new SelectAttributeValuesModel();
                 break;
             default:
                 trigger_error(

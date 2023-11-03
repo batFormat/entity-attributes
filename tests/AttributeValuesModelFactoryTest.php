@@ -5,7 +5,7 @@ namespace Batformat\EntityAttributes\Tests;
 use Batformat\EntityAttributes\Exceptions\BadTypeException;
 use Batformat\EntityAttributes\Models\AttributeValues\Factories\AttributeValuesModelFactory;
 use Batformat\EntityAttributes\Models\AttributeValues\TextAttributeValuesModel;
-use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class AttributeValuesModelFactoryTest extends TestCase
 {
@@ -19,6 +19,7 @@ class AttributeValuesModelFactoryTest extends TestCase
      */
     public function testFactory(): void
     {
+        // attribute_value_collection
         $value = [
             'attribute_id'   => 1,
             'attribute_type' => 'text',

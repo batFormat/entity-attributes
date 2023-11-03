@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Batformat\EntityAttributes\Models\AttributeValues\Factories;
 
-use Batformat\EntityAttributes\Exceptions\BadTypeException;
 use Batformat\EntityAttributes\Models\Attributes\AttributeModel;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\BaseAttributeValueCollection;
+use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\NumericAttributeValueCollection;
+use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\SelectAttributeValueCollection;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\TextAttributeValueCollection;
 
 class AttributeValueCollectionFactory
@@ -15,7 +16,6 @@ class AttributeValueCollectionFactory
      * @param array $attribute
      *
      * @return BaseAttributeValueCollection
-     * @throws BadTypeException
      */
     public static function createCollection(array $attribute): BaseAttributeValueCollection
     {
@@ -24,6 +24,12 @@ class AttributeValueCollectionFactory
         switch ($attributeType) {
             case AttributeModel::TYPE_TEXT:
                 $collection = new TextAttributeValueCollection();
+                break;
+            case AttributeModel::TYPE_NUMERIC:
+                $collection = new NumericAttributeValueCollection();
+                break;
+            case AttributeModel::TYPE_SELECT:
+                $collection = new SelectAttributeValueCollection();
                 break;
             default:
                 trigger_error(
