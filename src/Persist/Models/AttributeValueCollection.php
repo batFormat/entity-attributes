@@ -17,8 +17,6 @@ class AttributeValueCollection extends Model
         AttributeModel::TYPE_MULTISELECT => 'enums',
     ];
 
-    protected $with = ['scalars', 'enums'];
-
     public function setAttributeId(int $id): self
     {
         $this->setAttribute('attribute_id', $id);
@@ -54,6 +52,8 @@ class AttributeValueCollection extends Model
     {
         $type = $this->getAttribute('attribute_type');
         $relationName = $this->relationsMap[$type];
+
+        $this->load($relationName);
 
         return [
             'attribute_id' => $this->getAttribute('attribute_id'),
