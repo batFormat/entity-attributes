@@ -6,9 +6,22 @@ namespace Batformat\EntityAttributes\Models;
 
 use Batformat\EntityAttributes\Collections\AttributesValuesCollection;
 
-class EntityModel
+class Entity
 {
+    protected int $id;
     protected AttributesValuesCollection|null $attributesValues;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getAttributesValues(): ?AttributesValuesCollection
     {
@@ -21,5 +34,7 @@ class EntityModel
 
         return $this;
     }
+
+
 }
 

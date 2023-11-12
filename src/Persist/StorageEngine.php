@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Batformat\EntityAttributes\Persist;
 
-use Batformat\EntityAttributes\Models\EntityModel;
+use Batformat\EntityAttributes\Models\Entity;
 
 abstract class StorageEngine
 {
-    protected EntityModel $entityModel;
+    protected Entity $entityModel;
 
-    public function __construct(EntityModel $entityModel)
+    public function __construct(Entity $entityModel)
     {
         $this->entityModel = $entityModel;
     }

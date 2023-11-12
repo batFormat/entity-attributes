@@ -5,10 +5,13 @@ namespace Batformat\EntityAttributes\Tests;
 use Batformat\EntityAttributes\Exceptions\BadTypeException;
 use Batformat\EntityAttributes\Models\AttributeValues\Factories\AttributeValuesModelFactory;
 use Batformat\EntityAttributes\Models\AttributeValues\TextAttributeValuesModel;
-use PHPUnit\Framework\TestCase;
+use Orchestra\Testbench\Concerns\WithWorkbench;
+use Orchestra\Testbench\TestCase;
 
 class AttributeValuesModelFactoryTest extends TestCase
 {
+    use WithWorkbench;
+
     public function setUp(): void
     {
         parent::setUp();

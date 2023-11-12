@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Batformat\EntityAttributes\Models\AttributeValues;
 
+use Batformat\EntityAttributes\Models\AttributeValues\Factories\AttributeValuesModelFactory;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\BaseAttributeValueCollection;
 
 class BaseAttributeValuesModel
@@ -13,6 +14,11 @@ class BaseAttributeValuesModel
     protected string|null $attributeCode;
 
     protected BaseAttributeValueCollection $values;
+
+    public static function fromArray(array $value): BaseAttributeValuesModel
+    {
+        return AttributeValuesModelFactory::createModel($value);
+    }
 
     public function getAttributeId(): ?int
     {

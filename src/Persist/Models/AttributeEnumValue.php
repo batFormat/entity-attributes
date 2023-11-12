@@ -13,6 +13,7 @@ class AttributeEnumValue extends AttributeValue
         'attribute_value_collection_id',
         'enum_code',
         'enum_id',
+        'value',
     ];
 
     public static function fromValueModelWithCollectionId(
@@ -21,8 +22,9 @@ class AttributeEnumValue extends AttributeValue
     ): AttributeValue {
         return new self([
             'attribute_value_collection_id' => $attributeValueCollectionId,
-            'enum_code'                     => $valueModel->getEnumCode(),
-            'enum_id'                       => $valueModel->getEnumId(),
+            'enum_code' => $valueModel->getEnumCode(),
+            'enum_id' => $valueModel->getEnumId(),
+            'value' => $valueModel->getValue(),
         ]);
     }
 }

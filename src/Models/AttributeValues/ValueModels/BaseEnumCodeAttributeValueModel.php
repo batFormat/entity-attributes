@@ -10,6 +10,12 @@ class BaseEnumCodeAttributeValueModel extends BaseAttributeValueModel
 
     protected ?int $enumId;
 
+    public function __construct()
+    {
+        $this->enumId = null;
+        $this->enumCode = null;
+    }
+
     public static function fromArray($value): BaseAttributeValueModel
     {
         $model = new static();
@@ -53,8 +59,8 @@ class BaseEnumCodeAttributeValueModel extends BaseAttributeValueModel
     public function toArray(): array
     {
         return [
-            'value'     => $this->getValue(),
-            'enum_id'   => $this->getEnumId(),
+            'value' => $this->getValue(),
+            'enum_id' => $this->getEnumId(),
             'enum_code' => $this->getEnumCode(),
         ];
     }

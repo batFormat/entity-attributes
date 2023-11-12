@@ -21,16 +21,20 @@ return new class extends Migration {
         Schema::create('attribute_value_collections', static function (Blueprint $table) {
             $table->id();
             $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
+            $table->string('attribute_type');
+            $table->string('attribute_code')->nullable();
 
             $table->timestamps();
         });
 
-        Schema::create('attribute_value_collection_entity', static function (Blueprint $table) {
+        Schema::create('attribute_value_collection_entities', static function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('entity_id');
             $table->foreignId('attribute_value_collection_id')
                 ->constrained('attribute_value_collections', 'id', 'entity_attribute_value_collection_id_foreign')
                 ->onDelete('cascade');
+
+            $table->unique(['entity_id', 'attribute_value_collection_id']);
 
             $table->timestamps();
         });
@@ -50,6 +54,7 @@ return new class extends Migration {
 
             $table->string('enum_code')->nullable();
             $table->unsignedBigInteger('enum_id')->nullable();
+            $table->string('value')->nullable();
 
             $table->timestamps();
         });
@@ -74,7 +79,8 @@ return new class extends Migration {
         Schema::dropIfExists('attribute_enum_values');
         Schema::dropIfExists('attribute_scalar_values');
         Schema::dropIfExists('attribute_value_collections');
-        Schema::dropIfExists('attribute_value_collection_entity');
+        Schema::dropIfExists('attribute_value_collection_entities');
         Schema::dropIfExists('attributes');
+        Schema::dropIfExists('entities');
     }
 };
