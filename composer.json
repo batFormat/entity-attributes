@@ -30,6 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Database\\Seeders\\": "database/seeders/",
             "Batformat\\EntityAttributes\\Tests\\": "tests",
             "Workbench\\App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",

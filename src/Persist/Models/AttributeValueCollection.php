@@ -56,6 +56,7 @@ class AttributeValueCollection extends Model
         $this->load($relationName);
 
         return [
+            'id' => $this->getAttribute('id'),
             'attribute_id' => $this->getAttribute('attribute_id'),
             'attribute_type' => $type,
             'attribute_code' => $this->getAttribute('attribute_code'),

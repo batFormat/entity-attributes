@@ -27,5 +27,10 @@ class AttributeEnumValue extends AttributeValue
             'value' => $valueModel->getValue(),
         ]);
     }
+
+    public function uniqueBy(): array
+    {
+        return ['attribute_value_collection_id'];
+    }
 }
 

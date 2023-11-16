@@ -16,8 +16,8 @@ class AttributeScalarValue extends AttributeValue
         'integer_value',
     ];
 
-    protected static array $columns = [
-        TextAttributeValueModel::class    => 'text_value',
+    protected static $columns = [
+        TextAttributeValueModel::class => 'text_value',
         NumericAttributeValueModel::class => 'integer_value',
     ];
 
@@ -27,8 +27,13 @@ class AttributeScalarValue extends AttributeValue
     ): AttributeValue {
         return new self([
             self::$columns[$valueModel::class] => $valueModel->getValue(),
-            'attribute_value_collection_id'    => $attributeValueCollectionId,
+            'attribute_value_collection_id' => $attributeValueCollectionId,
         ]);
+    }
+
+    public function uniqueBy(): array
+    {
+        return ['attribute_value_collection_id'];
     }
 }
 
