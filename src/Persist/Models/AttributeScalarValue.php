@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Batformat\EntityAttributes\Persist\Models;
 
+use Batformat\EntityAttributes\Models\AttributeValues\BaseAttributeValuesModel;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\BaseAttributeValueModel;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\NumericAttributeValueModel;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\TextAttributeValueModel;
@@ -11,29 +12,46 @@ use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\TextAttributeV
 class AttributeScalarValue extends AttributeValue
 {
     protected $fillable = [
-        'attribute_value_collection_id',
+        'entity_id',
+        'attribute_id',
+        'attribute_type',
+        'attribute_code',
         'text_value',
         'integer_value',
     ];
 
+    protected $appends = ['value'];
+
     protected static $columns = [
-        TextAttributeValueModel::class => 'text_value',
+        TextAttributeValueModel::class    => 'text_value',
         NumericAttributeValueModel::class => 'integer_value',
     ];
 
-    public static function fromValueModelWithCollectionId(
-        BaseAttributeValueModel $valueModel,
-        int $attributeValueCollectionId
-    ): AttributeValue {
-        return new self([
-            self::$columns[$valueModel::class] => $valueModel->getValue(),
-            'attribute_value_collection_id' => $attributeValueCollectionId,
-        ]);
+    public static function fromValuesModelsToArray(
+        BaseAttributeValuesModel $valuesModel,
+        BaseAttributeValueModel $valueModel
+    ): array {
+        return [
+            'text_value'                       => null,
+            'integer_value'                    => null,
+            self::$columns[$valueModel::class] => $valueModel->getValue()
+        ];
     }
 
-    public function uniqueBy(): array
+    public static function fromArray(
+        BaseAttributeValuesModel $valuesModel,
+        BaseAttributeValueModel $valueModel
+    ): AttributeValue {
+        return new self(self::fromValuesModelsToArray($valuesModel, $valueModel));
+    }
+
+    public function getValueAttribute(): string|int|null
     {
-        return ['attribute_value_collection_id'];
+        return $this->text_value ?? $this->integer_value ?? null;
+    }
+
+    public static function uniqueBy(): array
+    {
+        return ['entity_id', 'attribute_id'];
     }
 }
-

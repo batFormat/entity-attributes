@@ -9,36 +9,16 @@ use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\BaseAttri
 
 class BaseAttributeValuesModel
 {
-    protected int|null $id;
-
     protected int|null $attributeId;
 
     protected string|null $attributeCode;
 
     protected BaseAttributeValueCollection $values;
 
-    public function __construct()
-    {
-        $this->id = null;
-    }
-
     public static function fromArray(array $value): BaseAttributeValuesModel
     {
         return AttributeValuesModelFactory::createModel($value);
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(?int $id): BaseAttributeValuesModel
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
 
     public function getAttributeId(): ?int
     {

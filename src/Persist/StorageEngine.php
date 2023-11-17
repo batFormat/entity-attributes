@@ -15,5 +15,5 @@ abstract class StorageEngine
         $this->entityModel = $entityModel;
     }
 
-    abstract public function flush(): void;
+    abstract public function save(): void;
 }

@@ -3,7 +3,6 @@
 namespace Batformat\EntityAttributes\Tests;
 
 use Batformat\EntityAttributes\Collections\AttributesValuesCollection;
-use Batformat\EntityAttributes\Models\AttributeValues\BaseAttributeValuesModel;
 use Batformat\EntityAttributes\Models\AttributeValues\SelectAttributeValuesModel;
 use Batformat\EntityAttributes\Models\AttributeValues\TextAttributeValuesModel;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\SelectAttributeValueCollection;
@@ -11,10 +10,9 @@ use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\TextAttri
 use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\SelectAttributeValueModel;
 use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\TextAttributeValueModel;
 use Batformat\EntityAttributes\Models\Entity;
-use Batformat\EntityAttributes\Persist\EloquentStorageEngine;
+use Batformat\EntityAttributes\Persist\EloquentAttributesStorageEngine;
 use Batformat\EntityAttributes\Persist\Models\AttributeValueCollection;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
@@ -64,6 +62,7 @@ class EntityModelTest extends TestCase
 
         $this->assertEquals($entityAttributesValues, $actualEntityAttributesValues);
     }
+
     public function storeAttributesValuesCollection(Entity $entity): Collection
     {
         $cityAttributeValueModel = new TextAttributeValuesModel();
@@ -93,29 +92,14 @@ class EntityModelTest extends TestCase
 
         $entity->setAttributesValues($entityAttributesValues);
 
-        $storage = new EloquentStorageEngine($entity);
-        $storage->flush();
+        $storage = new EloquentAttributesStorageEngine($entity);
+        $storage->save();
 
         return $entityAttributesValues;
     }
 
     public function getAttributesValuesCollection(Entity $entity): AttributesValuesCollection
     {
-        $valuesCollectionIds = DB::table('attribute_value_collection_entities')
-            ->where('entity_id', $entity->getId())
-            ->pluck('attribute_value_collection_id');
-
-        $valuesCollections = AttributeValueCollection::query()
-            ->whereIn('id', $valuesCollectionIds)
-            ->get();
-
-        $actualEntityAttributesValues = new AttributesValuesCollection();
-
-        foreach ($valuesCollections as $valuesCollection) {
-            $attributeValueModel = BaseAttributeValuesModel::fromArray($valuesCollection->toArray());
-            $actualEntityAttributesValues->add($attributeValueModel);
-        }
-
-        return $actualEntityAttributesValues;
+        return (new EloquentAttributesStorageEngine($entity))->getAttributesValues();
     }
 }

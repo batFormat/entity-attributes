@@ -8,10 +8,11 @@ use Batformat\EntityAttributes\Collections\AttributesValuesCollection;
 
 class Entity
 {
-    protected int $id;
+    protected int|null $id = null;
+
     protected AttributesValuesCollection|null $attributesValues;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

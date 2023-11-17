@@ -6,7 +6,7 @@ namespace Batformat\EntityAttributes\Models\AttributeValues\ValueModels;
 
 class BaseAttributeValueModel
 {
-    protected string|int|bool|array|null|object $value;
+    protected string|int|bool|array|null|object $value = null;
 
     public static function fromArray($value): BaseAttributeValueModel
     {

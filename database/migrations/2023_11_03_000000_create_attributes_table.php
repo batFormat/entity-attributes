@@ -18,55 +18,37 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('attribute_value_collections', static function (Blueprint $table) {
+        // TODO: for entity + attributes relation
+
+        Schema::create('attribute_scalar_values', static function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('entity_id');
             $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
             $table->string('attribute_type');
             $table->string('attribute_code')->nullable();
 
-            $table->timestamps();
-        });
-
-        Schema::create('attribute_value_collection_entities', static function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('entity_id');
-            $table->foreignId('attribute_value_collection_id')
-                ->constrained('attribute_value_collections', 'id', 'entity_attribute_value_collection_id_foreign')
-                ->onDelete('cascade');
-
-            $table->unique(['entity_id', 'attribute_value_collection_id']);
-
-            $table->timestamps();
-        });
-
-        Schema::create('attribute_scalar_values', static function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('attribute_value_collection_id')->constrained()->onDelete('cascade');
             $table->string('text_value')->nullable();
             $table->unsignedBigInteger('integer_value')->nullable();
 
             $table->timestamps();
+
+            $table->unique(['entity_id', 'attribute_id'], 'entity_id_attribute_id_unique');
         });
 
         Schema::create('attribute_enum_values', static function (Blueprint $table) {
             $table->id();
-            $table->foreignId('attribute_value_collection_id')->constrained()->onDelete('cascade');
 
-            $table->string('enum_code')->nullable();
-            $table->unsignedBigInteger('enum_id')->nullable();
-            $table->string('value')->nullable();
+            $table->unsignedBigInteger('entity_id');
+            $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
+            $table->string('attribute_type');
+            $table->string('attribute_code')->nullable();
 
-            $table->timestamps();
-        });
-
-        Schema::create('attribute_catalog_values', static function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('attribute_value_collection_id')->constrained()->onDelete('cascade');
-
-            $table->string('catalog_id')->nullable();
-            $table->unsignedBigInteger('catalog_element_id')->nullable();
+            $table->jsonb('json_value')->nullable();
 
             $table->timestamps();
+
+            $table->unique(['entity_id', 'attribute_id'], 'entity_id_attribute_id_unique');
         });
     }
 
@@ -78,8 +60,6 @@ return new class extends Migration {
         Schema::dropIfExists('attribute_catalog_values');
         Schema::dropIfExists('attribute_enum_values');
         Schema::dropIfExists('attribute_scalar_values');
-        Schema::dropIfExists('attribute_value_collections');
-        Schema::dropIfExists('attribute_value_collection_entities');
         Schema::dropIfExists('attributes');
         Schema::dropIfExists('entities');
     }
