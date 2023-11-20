@@ -79,11 +79,19 @@ class EloquentAttributesStorageEngine extends StorageEngine
         foreach ($collection as $item) {
             $values = [];
 
+            $attributeId = $attributeCodes[$item->getAttributeCode()] ?? null;
+
+            if (is_null($attributeId)) {
+                throw new \InvalidArgumentException(
+                    sprintf('Invalid attribute code: %s', $item->getAttributeCode())
+                );
+            }
+
             $attributes = [
                 'entity_id' => $this->entityModel->getId(),
+                'attribute_id' => $attributeId,
                 'attribute_type' => $item->getFieldType(),
                 'attribute_code' => $item->getAttributeCode(),
-                'attribute_id' => $attributeCodes[$item->getAttributeCode()],
             ];
 
             /** @var class-string<AttributeValue> $className */
