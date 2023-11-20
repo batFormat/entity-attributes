@@ -26,6 +26,11 @@ class DatabaseSeeder extends Seeder
                 'code' => 'status',
                 'type' => 'select',
             ],
+            [
+                'name' => 'Стоимость',
+                'code' => 'price',
+                'type' => 'numeric',
+            ],
         ];
 
         foreach ($attributes as $attribute) {
