@@ -17,9 +17,9 @@ use Illuminate\Support\Collection;
 class EloquentAttributesStorageEngine extends StorageEngine
 {
     protected array $mapGroups = [
-        TextAttributeValuesModel::class    => AttributeScalarValue::class,
+        TextAttributeValuesModel::class => AttributeScalarValue::class,
         NumericAttributeValuesModel::class => AttributeScalarValue::class,
-        SelectAttributeValuesModel::class  => AttributeEnumValue::class,
+        SelectAttributeValuesModel::class => AttributeEnumValue::class,
     ];
 
     public function getAttributesValues(): AttributesValuesCollection
@@ -42,10 +42,10 @@ class EloquentAttributesStorageEngine extends StorageEngine
                 $item = $items->first();
 
                 return [
-                    'attribute_id'   => $item->attribute_id,
+                    'attribute_id' => $item->attribute_id,
                     'attribute_type' => $item->attribute_type,
                     'attribute_code' => $item->attribute_code,
-                    'values'         => $items
+                    'values' => $items
                 ];
             });
 
@@ -70,8 +70,8 @@ class EloquentAttributesStorageEngine extends StorageEngine
             $values = [];
 
             $attributes = [
-                'entity_id'      => $this->entityModel->getId(),
-                'attribute_id'   => $item->getAttributeId(),
+                'entity_id' => $this->entityModel->getId(),
+                'attribute_id' => $item->getAttributeId(),
                 'attribute_type' => $item->getFieldType(),
                 'attribute_code' => $item->getAttributeCode(),
             ];
@@ -82,11 +82,7 @@ class EloquentAttributesStorageEngine extends StorageEngine
             if ($className === AttributeEnumValue::class) {
                 $values[] = [
                     ...$attributes,
-                    // todo: refactor
-                    'json_value' => json_encode(
-                        $item->getValues()->map(fn($item) => $item->toArray())->toArray(),
-                        JSON_THROW_ON_ERROR
-                    )
+                    'json_value' => $item->getValues()->map(fn($item) => $item->toArray())->toJson()
                 ];
             } else {
                 foreach ($item->getValues() as $value) {

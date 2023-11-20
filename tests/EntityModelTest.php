@@ -11,7 +11,6 @@ use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\SelectAttribut
 use Batformat\EntityAttributes\Models\AttributeValues\ValueModels\TextAttributeValueModel;
 use Batformat\EntityAttributes\Models\Entity;
 use Batformat\EntityAttributes\Persist\EloquentAttributesStorageEngine;
-use Batformat\EntityAttributes\Persist\Models\AttributeValueCollection;
 use Illuminate\Support\Collection;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
@@ -80,8 +79,13 @@ class EntityModelTest extends TestCase
             (new SelectAttributeValueCollection())
                 ->add(
                     (new SelectAttributeValueModel())
-                        ->setEnumId(555)
+                        ->setEnumId(111)
                         ->setValue('Новый')
+                )
+                ->add(
+                    (new SelectAttributeValueModel())
+                        ->setEnumId(555)
+                        ->setValue('В работе')
                 )
         );
 

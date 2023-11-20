@@ -33,7 +33,7 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            $table->unique(['entity_id', 'attribute_id'], 'entity_id_attribute_id_unique');
+            $table->unique(['entity_id', 'attribute_id'], 'attribute_scalar_values_entity_id_attribute_id_unique');
         });
 
         Schema::create('attribute_enum_values', static function (Blueprint $table) {
@@ -48,7 +48,7 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            $table->unique(['entity_id', 'attribute_id'], 'entity_id_attribute_id_unique');
+            $table->unique(['entity_id', 'attribute_id'], 'attribute_enum_values_entity_id_attribute_id_unique');
         });
     }
 
