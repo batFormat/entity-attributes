@@ -21,7 +21,6 @@ class AttributeManagerTest extends TestCase
     public function testAttributeValueDTO(): void
     {
         $cityAttributeValueModel = new TextAttributeValuesModel();
-        $cityAttributeValueModel->setAttributeId(1);
         $cityAttributeValueModel->setAttributeCode('city');
         $cityAttributeValueModel->setValues(
             (new TextAttributeValueCollection())
@@ -29,7 +28,7 @@ class AttributeManagerTest extends TestCase
         );
 
         $attributeManager = new AttributeManager();
-        $attributeManager->addTextValue(1, 'city', 'Вологда');
+        $attributeManager->addTextValue('city', 'Вологда');
 
         $this->assertEquals($cityAttributeValueModel, $attributeManager->getValues()->first());
     }

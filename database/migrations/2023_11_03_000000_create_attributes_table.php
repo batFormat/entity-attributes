@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('attributes', static function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->string('code')->unique();
             $table->string('type');
 
             $table->timestamps();
@@ -26,7 +27,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('entity_id');
             $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
             $table->string('attribute_type');
-            $table->string('attribute_code')->nullable();
+            $table->string('attribute_code')->unique();
 
             $table->string('text_value')->nullable();
             $table->unsignedBigInteger('integer_value')->nullable();
@@ -42,7 +43,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('entity_id');
             $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
             $table->string('attribute_type');
-            $table->string('attribute_code')->nullable();
+            $table->string('attribute_code')->unique();
 
             $table->jsonb('json_value')->nullable();
 

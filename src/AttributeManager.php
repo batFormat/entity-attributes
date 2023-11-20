@@ -43,10 +43,9 @@ class AttributeManager
     }
 
     // or scalar value?
-    public function addTextValue(int $attributeId, string $attributeCode, string $value): self
+    public function addTextValue(string $attributeCode, string $value): self
     {
         $attributeValue = new TextAttributeValueDTO(
-            attributeId: $attributeId,
             attributeCode: $attributeCode,
             values: [$value],
         );

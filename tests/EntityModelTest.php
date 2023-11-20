@@ -65,7 +65,6 @@ class EntityModelTest extends TestCase
     public function storeAttributesValuesCollection(Entity $entity): Collection
     {
         $cityAttributeValueModel = new TextAttributeValuesModel();
-        $cityAttributeValueModel->setAttributeId(1);
         $cityAttributeValueModel->setAttributeCode('city');
         $cityAttributeValueModel->setValues(
             (new TextAttributeValueCollection())
@@ -73,7 +72,6 @@ class EntityModelTest extends TestCase
         );
 
         $statusAttributeValueModel = new SelectAttributeValuesModel();
-        $statusAttributeValueModel->setAttributeId(2);
         $statusAttributeValueModel->setAttributeCode('status');
         $statusAttributeValueModel->setValues(
             (new SelectAttributeValueCollection())

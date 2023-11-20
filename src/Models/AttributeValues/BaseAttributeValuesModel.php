@@ -9,8 +9,6 @@ use Batformat\EntityAttributes\Models\AttributeValues\ValueCollections\BaseAttri
 
 class BaseAttributeValuesModel
 {
-    protected int|null $attributeId;
-
     protected string|null $attributeCode;
 
     protected BaseAttributeValueCollection $values;
@@ -18,18 +16,6 @@ class BaseAttributeValuesModel
     public static function fromArray(array $value): BaseAttributeValuesModel
     {
         return AttributeValuesModelFactory::createModel($value);
-    }
-
-    public function getAttributeId(): ?int
-    {
-        return $this->attributeId;
-    }
-
-    public function setAttributeId(?int $attributeId): BaseAttributeValuesModel
-    {
-        $this->attributeId = $attributeId;
-
-        return $this;
     }
 
     public function getAttributeCode(): ?string

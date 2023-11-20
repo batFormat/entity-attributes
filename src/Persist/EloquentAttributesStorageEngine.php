@@ -13,6 +13,7 @@ use Batformat\EntityAttributes\Persist\Models\AttributeEnumValue;
 use Batformat\EntityAttributes\Persist\Models\AttributeScalarValue;
 use Batformat\EntityAttributes\Persist\Models\AttributeValue;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class EloquentAttributesStorageEngine extends StorageEngine
 {
@@ -37,20 +38,18 @@ class EloquentAttributesStorageEngine extends StorageEngine
         collect()
             ->merge($scalarValues)
             ->merge($enumValues)
-            ->groupBy('attribute_id')
+            ->groupBy('attribute_code')
             ->each(function (Collection $items) use ($collection) {
                 $item = $items->first();
 
                 if ($item instanceof AttributeEnumValue) {
                     $collection->add([
-                        'attribute_id' => $item->attribute_id,
                         'attribute_type' => $item->attribute_type,
                         'attribute_code' => $item->attribute_code,
                         'values' => $item->json_value
                     ]);
                 } else {
                     $collection->add([
-                        'attribute_id' => $item->attribute_id,
                         'attribute_type' => $item->attribute_type,
                         'attribute_code' => $item->attribute_code,
                         'values' => $items->toArray()
@@ -70,6 +69,8 @@ class EloquentAttributesStorageEngine extends StorageEngine
 
     public function save(): void
     {
+        $attributeCodes = DB::table('attributes')->get()->pluck('id', 'code');
+
         $collection = $this->entityModel->getAttributesValues();
 
         $requests = [];
@@ -80,9 +81,9 @@ class EloquentAttributesStorageEngine extends StorageEngine
 
             $attributes = [
                 'entity_id' => $this->entityModel->getId(),
-                'attribute_id' => $item->getAttributeId(),
                 'attribute_type' => $item->getFieldType(),
                 'attribute_code' => $item->getAttributeCode(),
+                'attribute_id' => $attributeCodes[$item->getAttributeCode()],
             ];
 
             /** @var class-string<AttributeValue> $className */

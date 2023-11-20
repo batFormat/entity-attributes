@@ -45,7 +45,7 @@ class AttributeValuesModelFactory
         $model
             ->setValues($values)
             ->setAttributeCode($attribute['attribute_code'] ?? null)
-            ->setAttributeId($attribute['attribute_id'] ?? null);
+        ;
 
         return $model;
     }
