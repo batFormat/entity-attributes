@@ -42,14 +42,7 @@ class AttributeValueCollectionFactory
 
         foreach ($attribute['values'] as $value) {
             $valueModel = AttributeValueModelFactory::createModel($attribute);
-
-            if ($attributeType === AttributeModel::TYPE_SELECT) {
-                foreach ($value->json_value as $item) {
-                    $collection->add($valueModel::fromArray($item));
-                }
-            } else {
-                $collection->add($valueModel::fromArray($value));
-            }
+            $collection->add($valueModel::fromArray($value));
         }
 
         return $collection;

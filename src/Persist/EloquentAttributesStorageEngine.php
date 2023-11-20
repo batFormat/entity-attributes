@@ -34,19 +34,28 @@ class EloquentAttributesStorageEngine extends StorageEngine
             ->where('entity_id', $this->entityModel->getId())
             ->get();
 
-        $collection = $collection
+        collect()
             ->merge($scalarValues)
             ->merge($enumValues)
             ->groupBy('attribute_id')
-            ->map(function (Collection $items) {
+            ->each(function (Collection $items) use ($collection) {
                 $item = $items->first();
 
-                return [
-                    'attribute_id' => $item->attribute_id,
-                    'attribute_type' => $item->attribute_type,
-                    'attribute_code' => $item->attribute_code,
-                    'values' => $items
-                ];
+                if ($item instanceof AttributeEnumValue) {
+                    $collection->add([
+                        'attribute_id' => $item->attribute_id,
+                        'attribute_type' => $item->attribute_type,
+                        'attribute_code' => $item->attribute_code,
+                        'values' => $item->json_value
+                    ]);
+                } else {
+                    $collection->add([
+                        'attribute_id' => $item->attribute_id,
+                        'attribute_type' => $item->attribute_type,
+                        'attribute_code' => $item->attribute_code,
+                        'values' => $items->toArray()
+                    ]);
+                }
             });
 
         $actualEntityAttributesValues = new AttributesValuesCollection();
